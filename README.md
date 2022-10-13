@@ -2,6 +2,10 @@
 
 Vehicle/vessel state and conversions with SNAME notation for naval architecture and marine robotics applications.
 
+## Installation
+
+    pip3 install -e .
+
 ## Definitions and notation
     # State is a 13x1 vector:
     # [u v w r p q xe ye ze q0 q1 q2 q3]'
