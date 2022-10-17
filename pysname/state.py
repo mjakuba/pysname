@@ -41,6 +41,7 @@ def dist(s1,s2):
 
     return(np.linalg.norm(s1.pe-s2.pe,'fro'))
 
+# 2022-10-17  MVJ  Never used these and seem useless.
 # # ECEF azimuth of s relative to s0
 # def azimuth(s0,s):
 #
@@ -53,7 +54,34 @@ def dist(s1,s2):
 #     dz = s.ze-s0.ze
 #     return(np.arctan(dz/dr))
 
+def ull(s0,s):
 
+    '''unit vector to s in local-level (NED) coordinates with origin at s0'''
+    
+    lat0 = s0.latitude
+    lon0 = s0.longitude
+    dn = s.get_north(lat0,lon0)
+    de = s.get_east(lat0,lon0)
+    dd = s.get_down(lat0,lon0)
+
+    return(np.mat([dn,de,dd]).T/dist(s0,s))
+
+def azimuth(s0,s):
+
+    '''celestial azimuth of s1 with origin at s0'''
+
+    u = ull(s0,s)
+    return(np.arctan2(u[1],u[0]))
+
+def elevation(s0,s):
+
+    '''celestial elevation of s1 with origin at s0; positive for dz<0'''    
+    
+    u = ull(s0,s)
+    dr = np.linalg.norm(u[:2])
+    dz = u[2]
+    return(np.arctan(-dz/dr))
+    
 class State(np.matrixlib.defmatrix.matrix):
 
     def __new__(self,*args):
