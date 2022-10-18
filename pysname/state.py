@@ -398,7 +398,7 @@ class State(np.matrixlib.defmatrix.matrix):
 
     # Quaternions.
     def get_q(self):
-        return(self[9:13,0])
+        return(self._asmatrix(self[9:13,0]))
     def set_q(self,q):
         self[9:13,0] = q
     q=property(get_q,set_q)
